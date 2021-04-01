@@ -68,7 +68,7 @@ class Product(models.Model):
     null=True,
     blank=True
   )
-  image         = models.ImageField(null=True, blank=True)
+  image         = models.ImageField(null=True, blank=True, default='/default.png')
   brand         = models.CharField(max_length=200, null=True, blank=True)
   category      = models.CharField(max_length=200, null=True, blank=True)
   description   = models.TextField(null=True, blank=True)
@@ -108,7 +108,7 @@ class Order(models.Model):
   _id = models.AutoField(primary_key=True, editable=False)
 
   def __str__(self):
-    return str(self.createdAt)
+    return self.user.first_name + ' ' + self.user.last_name
 
 class OrderItem(models.Model):
   product = models.ForeignKey(Product, on_delete=models.SET_NULL, null=True)

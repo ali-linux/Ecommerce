@@ -27,5 +27,20 @@ urlpatterns = [
     views.updateUserProfile,
     name='user-profile-update'
   ),
+  path(
+    'user/delete/<str:pk>',
+    views.deleteUser,
+    name='user-delete'
+  ),
+  path(
+    'user/update/<str:pk>',
+    views.updateUserById,
+    name='user-update'
+  ),
+  path(
+    'user/get/<str:pk>',
+    views.getUserById,
+    name='user-get'
+  ),
     # path('user/token/refresh/', TokenRefreshView.as_view(), name='token_refresh'),
 ]

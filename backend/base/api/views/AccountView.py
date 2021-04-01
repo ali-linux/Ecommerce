@@ -61,7 +61,7 @@ def SignupView(request):
       last_name = ' ';
     if (validate_email(data['email'])):
       if (validate_username(username)):
-        return Response({'detail': 'username is required field and it should contain only letters or underscores '})
+        return Response({'details': 'username is required field and it should contain only letters or underscores '})
       else:
         user = Account.objects.create(
         email=email,
@@ -73,7 +73,34 @@ def SignupView(request):
       serializer = UserSerializerWithToken(user, many=False)
       return Response(serializer.data)
     else:
-      return Response({'detail': 'please enter a valid email'})
+      return Response({'details': 'please enter a valid email'})
   except Exception:
-    message = {'detail': 'User with this email address already exists','data':data}
+    message = {'details': 'User with this email address already exists','data':data}
     return Response(message, status=status.HTTP_400_BAD_REQUEST)
+
+@api_view(['DELETE'])
+@permission_classes([IsAdminUser])
+def deleteUser(request, pk):
+  userForDeletation = Account.objects.get(id=pk)
+  userForDeletation.delete()
+  return Response({'details': 'deleted user successfully'})
+  
+@api_view(['GET'])
+@permission_classes([IsAdminUser])
+def getUserById(request, pk):
+  user = Account.objects.get(id=pk)
+  serializer = UserSerializer(user, many=False)
+  return  Response(serializer.data)
+
+@api_view(['PUT'])
+@permission_classes([IsAdminUser])
+def updateUserById(request,pk):
+  user = Account.objects.get(id=pk)
+  data = request.data
+  user.email = data['email']
+  user.is_staff = data['isAdmin']
+  user.username = data['username']
+
+  user.save()
+  serializer = UserSerializer(user, many=False)
+  return Response(serializer.data)

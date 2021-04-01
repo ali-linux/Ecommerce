@@ -12,10 +12,21 @@ urlpatterns = [
     views.getOrders,
     name='myorders'
   ),
+  
+  path(
+    'orders',
+    views.getAllOrders,
+    name='myorders'
+  ),
   path(
     'order/<str:pk>',
     views.getOrderById,
     name='user-order'
+  ),
+  path(
+    'order/delivered/<str:pk>',
+    views.updateOrderToDelivered,
+    name='deliver-order'
   ),
   path(
     'order/<str:pk>/pay',

@@ -11,7 +11,7 @@ from django.contrib.auth.models import Group
 #       super(CustomModelAdmin, self).__init__(User, admin_site)
 
 class AccountAdmin(UserAdmin):
-  list_display = ['email', 'username', 'first_name','date_join','last_login','is_admin','is_staff',]
+  list_display = ['id','email', 'username', 'first_name','date_join','last_login','is_admin','is_staff',]
   search_fields = ['email', 'username']
   readonly_fields = ['date_join', 'last_login']
 
